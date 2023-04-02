@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easter game</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="left-side">
+            <div class="container-player" id="playerContainer">
+            </div>
+
+            <div class="game-canvas">
+                <canvas id="canvas1"></canvas>
+                <canvas id="collisionCanvas"></canvas>
+            </div>
+        </div>
+
+        <div class="score-window">
+            <h3>History Game Scores</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Player</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody id="scores">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <h1>Welcome</h1>
+            <p>Please enter your name and choose an avatar:</p>
+            <input type="text" id="name">
+            <div class="avatars">
+                <img src="asset/avatar-1.jpeg" alt="Avatar 1" onclick="selectAvatar('asset/avatar-1.jpeg')">
+                <img src="asset/avatar-2.jpeg" alt="Avatar 2" onclick="selectAvatar('asset/avatar-2.jpeg')">
+                <img src="asset/avatar-3.jpeg" alt="Avatar 2" onclick="selectAvatar('asset/avatar-3.jpeg')">
+                <img src="asset/avatar-4.jpeg" alt="Avatar 2" onclick="selectAvatar('asset/avatar-4.jpeg')">
+                <img src="asset/avatar-5.jpeg" alt="Avatar 2" onclick="selectAvatar('asset/avatar-5.jpeg')">
+                </select>
+            </div>
+            <button class="submit-button" onclick="closeModal(); startGame()">go</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script src="script-2.js"></script>
+</body>
+
+</html>
