@@ -129,7 +129,8 @@ input[type="text"] {
     height: 600px;
     position: relative;
     margin: 0 auto;
-    background: linear-gradient(45deg, red, green, blue);
+    background-image: url("asset/game/farm_bg.png");
+    background-size: cover;
     overflow: hidden;
 }
 
