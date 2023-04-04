@@ -18,7 +18,7 @@ let gameOver = false;
 ctx.font = '50px Impact';
 
 // time intervals
-let timeToNextRaven = 0;
+let timeToNextChicken = 0;
 let enemyInterval = 500;
 let lastTime = 0;
 
@@ -43,8 +43,8 @@ class Chicken {
         this.maxFrame = 4;
         this.timeSinceFlap = 0;
         this.flapInterval = Math.random() * 50 + 50;
-        // this.randomColor = [Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)];
-        this.color = 'rgb(255, 255, 255)';
+        this.randomColor = [Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)];
+        this.color = 'rgb(' + this.randomColor[0] + ',' + this.randomColor[1] + ','  + this.randomColor[2] + ')';
         this.hasTrail = Math.random() > 0.5;
     }
 
@@ -64,7 +64,7 @@ class Chicken {
             this.timeSinceFlap = 0;
             if (this.hasTrail) {
                 for (let i = 0; i < 1; i++) {
-                    particles.push(new Particle(this.x, this.y, this.width, this.color));
+                    particles.push(new Particle(this.x, this.y, this.width));
                 }
             }
         }
@@ -117,7 +117,7 @@ class Explosion {
 
 let particles = [];
 class Particle {
-    constructor(x, y, size, color) {
+    constructor(x, y, size) {
         this.size = size;
         this.x = x + this.size * 0.5 + Math.random() * 50 - 25;
         this.y = y + this.size * 0.3 + Math.random() * 50 - 25;
@@ -125,7 +125,7 @@ class Particle {
         this.maxRadius = Math.random() * 20 + 35;
         this.markedForDeletion = false;
         this.speedX = Math.random() * 1 + 0.5;
-        this.color = color;
+        this.color = 'rgb(255, 255, 255)';
     }
     update() {
         this.x += this.speedX;
@@ -160,16 +160,17 @@ function drawGameOver() {
     ctx.fillStyle = 'white';
     ctx.fillText('GAME OVER, Score: ' + score, canvas.width * 0.5 + 5, canvas.height * 0.5 + 5);
 }
+
 window.addEventListener('click', function(e) {
     const detectPixelColor = collisionCtx.getImageData(e.x, e.y, 1, 1);
     console.log(detectPixelColor);
     const pc = detectPixelColor.data;
-    ravens.forEach(raven => {
-        if (raven.randomColor[0] === pc[0] && raven.randomColor[1] === pc[1] && raven.randomColor[2] === pc[2]) {
+    chickens.forEach(chicken => {
+        if (chicken.randomColor[0] === pc[0] && chicken.randomColor[1] === pc[1] && chicken.randomColor[2] === pc[2]) {
             // colision detected
-            raven.markedForDeletion = true;
+            chicken.markedForDeletion = true;
             score++;
-            explosions.push(new Explosion(raven.x, raven.y, raven.width));
+            explosions.push(new Explosion(chicken.x, chicken.y, chicken.width));
         }
     })
 })
@@ -179,20 +180,20 @@ function animate(timeStamp) {
     collisionCtx.clearRect(0, 0, canvas.width, canvas.height);
     let deltaTime = timeStamp - lastTime;
     lastTime = timeStamp;
-    timeToNextRaven += deltaTime;
-    if (timeToNextRaven > ravenInterval) {
-        ravens.push(new Raven());
-        timeToNextRaven = 0;
-        ravens.sort(function(a, b) {
+    timeToNextChicken += deltaTime;
+    if (timeToNextChicken > enemyInterval) {
+        chickens.push(new Chicken());
+        timeToNextChicken = 0;
+        chickens.sort(function(a, b) {
             return a.width - b.width;
         })
     };
     // player score
     drawScore();
     // array literal spread operator
-    [...particles, ...ravens, ...explosions].forEach(object => object.update(deltaTime));
-    [...particles, ...ravens, ...explosions].forEach(object => object.draw());
-    ravens = ravens.filter(raven => !raven.markedForDeletion);
+    [...particles, ...chickens, ...explosions].forEach(object => object.update(deltaTime));
+    [...particles, ...chickens, ...explosions].forEach(object => object.draw());
+    chickens = chickens.filter(raven => !raven.markedForDeletion);
     explosions = explosions.filter(explosion => !explosion.markedForDeletion);
     particles = particles.filter(particle => !particle.markedForDeletion);
     if (!gameOver) requestAnimationFrame(animate)
