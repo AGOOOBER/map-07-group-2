@@ -1,0 +1,40 @@
+# Design Patterns
+    A toolkit of tried and tested solutions to common
+    promblems in software design.
+
+## Creational
+    provide us with different object creation mechanisms
+
+## Structural
+    help us to asseble objects into flexible and efficient code structures
+
+## Behavioural
+    Deals with communication and assigning responsibilities between objects
+
+## State
+    ## A behavioural pattern that lets an object alter it's behaviour when it's internal state changes
+    ## Allows objects to change thier behaviour based on their current state
+    ## In each state we can limit what keys player will react to and we can write logic that defines
+        behaviour for each key press sepreately
+
+# JavaScript Modules
+    allow us to split programs into separate parts that can be imported where they are needed
+## use of native JavaScript modules is dependent on the import and export statements
+
+# 4 principles of Object Oriendted Programming:
+
+## 1. Encapsulation
+    ### We wrap variables or data and functions that operate on that data into objects
+    ### It can be used to protect our data from unwanted outside access, it simplifies maintance
+        of or code by keeping it organised and easier to understand
+## 2. Inheritance
+    ### A process where one class inherits attributes and methods from another class. We use it to avoid code repition.
+## 3. Polymorphism
+    ### It allows methods to display different behaviour depending on which class calls it.
+## 4. Abstraction
+    ###
+
+# Native JavaScript Modules are part of ES6 standard and allow us to split our code into separate files
+    ## Memebers of these modules(e.i classes, functions, variables) can be exported and imported around
+        our program, whenever they are needed.
+    ## Types of exports: named & default
