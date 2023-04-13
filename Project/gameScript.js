@@ -8,7 +8,7 @@ canvas.width = nativeWidth;
 canvas.height = nativeHeight;
 const collisionCanvas = document.getElementById('collisionCanvas');
 const collisionCtx = collisionCanvas.getContext('2d');
-collisionCanvas.width = nativeWidth; 
+collisionCanvas.width = nativeWidth;
 collisionCanvas.height = nativeHeight;
 
 
@@ -44,7 +44,7 @@ class Chicken {
         this.timeSinceFlap = 0;
         this.flapInterval = Math.random() * 50 + 50;
         this.randomColor = [Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)];
-        this.color = 'rgb(' + this.randomColor[0] + ',' + this.randomColor[1] + ','  + this.randomColor[2] + ')';
+        this.color = 'rgb(' + this.randomColor[0] + ',' + this.randomColor[1] + ',' + this.randomColor[2] + ')';
         this.hasTrail = Math.random() > 0.5;
     }
 
@@ -163,7 +163,7 @@ function drawGameOver() {
 
 window.addEventListener('click', function(e) {
     const detectPixelColor = collisionCtx.getImageData(e.x, e.y, 1, 1);
-    console.log(detectPixelColor);
+    // console.log(detectPixelColor);
     const pc = detectPixelColor.data;
     chickens.forEach(chicken => {
         if (chicken.randomColor[0] === pc[0] && chicken.randomColor[1] === pc[1] && chicken.randomColor[2] === pc[2]) {
@@ -196,10 +196,49 @@ function animate(timeStamp) {
     chickens = chickens.filter(raven => !raven.markedForDeletion);
     explosions = explosions.filter(explosion => !explosion.markedForDeletion);
     particles = particles.filter(particle => !particle.markedForDeletion);
-    if (!gameOver) requestAnimationFrame(animate)
-    else drawGameOver();
+    if (!gameOver) {
+        requestAnimationFrame(animate);
+    } else {
+        drawGameOver();
+        if (currentUser) {
+            currentUser.score = score;
+            currentUser.scoreHistory.push(score);
+            console.log(users) // Update the currentUser's score
+        }
+    }
 }
 //animate(0);
+
 function startGame() {
     animate(0);
 }
+
+document.getElementById('startButton').addEventListener('click', () => {
+    startGame();
+    document.getElementById('startButton').style.display = 'none';
+});
+
+function resetGame() {
+    score = 0;
+    gameOver = false;
+    timeToNextChicken = 0;
+    lastTime = 0;
+    chickens = [];
+    explosions = [];
+    particles = [];
+    document.getElementById('restartButton').style.display = 'none';
+}
+
+function drawGameOver() {
+    ctx.textAlign = 'center';
+    ctx.fillStyle = 'black';
+    ctx.fillText('GAME OVER, Score: ' + score, canvas.width * 0.5, canvas.height * 0.5);
+    ctx.fillStyle = 'white';
+    ctx.fillText('GAME OVER, Score: ' + score, canvas.width * 0.5 + 5, canvas.height * 0.5 + 5);
+    document.getElementById('restartButton').style.display = 'block';
+}
+
+document.getElementById('restartButton').addEventListener('click', () => {
+    resetGame();
+    startGame();
+});
